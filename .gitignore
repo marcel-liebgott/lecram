@@ -1,0 +1,15 @@
+#Files
+.project
+.htaccess
+.buildpath
+.coverage.xml
+
+#Folders
+.idea
+.settings
+/coverage
+/doc
+/output
+/root
+/test
+/vendor
