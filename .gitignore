@@ -2,7 +2,7 @@
 .project
 .htaccess
 .buildpath
-.coverage.xml
+coverage.xml
 
 #Folders
 .idea
