@@ -22,11 +22,12 @@
 
 namespace Lecram;
 
-use Lecram\Singleton;
 use Lecram\Exception\FileNotFoundException;
-use Lecram\Exception\InvalidClassNameException;
 
-require_once 'Singleton.php';
+require_once 'core/Singleton.php';
+require_once 'core/Exception/IOException.php';
+require_once 'core/Exception/InvalidClassNameException.php';
+require_once 'core/Exception/FileNotFoundException.php';
 
 /**
  * a customozed application autoloader
@@ -107,7 +108,7 @@ class Autoload extends Singleton{
 	 * @param string $class
 	 * @codeCoverageIgnore
 	 */
-	public function autoload(string $class){		
+	public function autoload(string $class){	
 		// get clear class name
 		$lastBackSlash = strrpos($class, '\\');
 		$className = $class;
