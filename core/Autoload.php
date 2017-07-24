@@ -97,7 +97,7 @@ class Autoload extends Singleton{
 	 * @codeCoverageIgnore
 	 */
 	public function unregister() : void{
-		spl_autoload_unregister(array($this, $this->autoload()));
+		spl_autoload_unregister([$this, $this->autoload()]);
 	}
 	
 	/**
