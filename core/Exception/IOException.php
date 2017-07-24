@@ -34,7 +34,7 @@ use Exception;
  * @since 1.0.0
  * @codeCoverageIgnore
  */
-final class IOException extends Exception{
+class IOException extends Exception{
 	/**
 	 * constructor
 	 *
