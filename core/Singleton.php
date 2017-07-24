@@ -59,7 +59,7 @@ abstract class Singleton{
 	 * 					the requested singleton object
 	 * @return Object
 	 */
-	public static function _getInstance($class){
+	protected static function _getInstance($class){
 		if(!isset(self::$instances[$class])){
 			self::$locked = false;
 			self::$instances[$class] = new $class();
@@ -72,7 +72,7 @@ abstract class Singleton{
 	/**
 	 * constructor
 	 *
-	 * @access public
+	 * @access protected
 	 * @throws Exception
 	 */
 	protected function __construct(){
