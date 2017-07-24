@@ -24,6 +24,7 @@ namespace Lecram;
 
 use Lecram\Bootstrap;
 use Lecram\Http\Request;
+use Lecram\Webserver;
 
 /**
  * Main application class
@@ -50,13 +51,17 @@ class Application{
 	}
 	
 	/**
-	 * set the autoloader for this application
+	 * set the autoloader for this application and register them
 	 * 
 	 * @since 1.0.0
 	 * @param Autoload $autoload
 	 */
 	public function setAutoloader(Autoload $autoload) : void{
 		$this->autoloader = $autoload;
+		
+		if($this->autoloader !== null){
+			$this->autoloader->register();
+		}
 	}
 	
 	/**
@@ -77,10 +82,6 @@ class Application{
 	 * @codeCoverageIgnore
 	 */
 	public function run(){
-		if($this->autoloader !== null){
-			$this->autoloader->register();
-		}
-		
 		$bootstrap = Bootstrap::getInstance();
 		$request = Request::createFromGlobals();
 		
