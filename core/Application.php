@@ -24,7 +24,7 @@ namespace Lecram;
 
 use Lecram\Bootstrap;
 use Lecram\Http\Request;
-use Lecram\Webserver;
+use Lecram\Server\Webserver;
 
 /**
  * Main application class
@@ -82,6 +82,7 @@ class Application{
 	 * @codeCoverageIgnore
 	 */
 	public function run(){
+		$webserver = Webserver::getInstance();		
 		$bootstrap = Bootstrap::getInstance();
 		$request = Request::createFromGlobals();
 		
