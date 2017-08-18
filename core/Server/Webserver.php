@@ -100,10 +100,10 @@ class Webserver extends Singleton{
 	 * 					which version is currently available on the webserver
 	 * @param string $requested
 	 * 					which version does we need
-	 * @param WebserverRequirement $operation
+	 * @param string $operation
 	 * 					which version operation does we need
 	 */
-	public function addRequirement(string $key, string $available, string $requested, WebserverRequirement $operation){
+	public function addRequirement(string $key, string $available, string $requested, string $operation){
 		$this->requirements->add(array($key => array($available => $requested)));
 	}
 	

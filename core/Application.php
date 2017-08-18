@@ -25,6 +25,7 @@ namespace Lecram;
 use Lecram\Bootstrap;
 use Lecram\Http\Request;
 use Lecram\Server\Webserver;
+use Lecram\Server\WebserverRequirement;
 
 /**
  * Main application class
@@ -111,7 +112,7 @@ class Application{
 	 * @since 1.0.0
 	 */
 	private function addWebserverRequirements(){
-		$this->webserver->addRequirement('php', $this->webserver->getPhpVersion(), '7.2');
+		$this->webserver->addRequirement('php', $this->webserver->getPhpVersion(), '7.2', WebserverRequirement::MIN);
 	}
 }
 ?>
