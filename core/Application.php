@@ -42,6 +42,14 @@ class Application{
 	private $autoloader;
 	
 	/**
+	 * current webserver instance
+	 * 
+	 * @access private
+	 * @var Webserver
+	 */
+	private $webserver;
+	
+	/**
 	 * constructor
 	 * 
 	 * @access public
@@ -82,12 +90,28 @@ class Application{
 	 * @codeCoverageIgnore
 	 */
 	public function run(){
-		$webserver = Webserver::getInstance();		
-		$bootstrap = Bootstrap::getInstance();
-		$request = Request::createFromGlobals();
+		$this->webserver = Webserver::getInstance();
+		$this->addWebserverRequirements();
 		
-		$bootstrap->setReuqest($request);
-		$bootstrap->run();
+		if($this->webserver->hasValidRequirements()){
+			$bootstrap = Bootstrap::getInstance();
+			$request = Request::createFromGlobals();
+			
+			$bootstrap->setReuqest($request);
+			$bootstrap->run();
+		}else{
+			echo "your webserver hasn't the minimum software requirements!";
+		}
+	}
+	
+	/**
+	 * add default webserver requirements
+	 * 
+	 * @access private
+	 * @since 1.0.0
+	 */
+	private function addWebserverRequirements(){
+		$this->webserver->addRequirement('php', $this->webserver->getPhpVersion(), '7.2');
 	}
 }
 ?>
