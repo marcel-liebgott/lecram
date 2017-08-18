@@ -59,11 +59,6 @@ class Webserver extends Singleton{
 	 */
 	protected function __construct(){
 		$this->requirements = new Listable();
-		$this->initRequirements();
-	}
-	
-	private function initRequirements(){
-		$this->addRequirement(WebserverRequirement::PHP_VERSION, "7.1.0");
 	}
 	
 	/**
@@ -94,12 +89,59 @@ class Webserver extends Singleton{
 		throw new \Exception('GD library isn\'t installed on your webserver.');
 	}
 	
-	public function addRequirement(string $requirement, $value){
-		$this->requirements->add(array($requirement => $value));		
+	/**
+	 * add a requirement
+	 * 
+	 * @access public
+	 * @since 1.0.0
+	 * @param string $key
+	 * 					the requirement key
+	 * @param string $available
+	 * 					which version is currently available on the webserver
+	 * @param string $requested
+	 * 					which version does we need
+	 * @param WebserverRequirement $operation
+	 * 					which version operation does we need
+	 */
+	public function addRequirement(string $key, string $available, string $requested, WebserverRequirement $operation){
+		$this->requirements->add(array($key => array($available => $requested)));
 	}
 	
-	public function hasRequirements() : bool{
-		return true;
+	/**
+	 * check if the webserver has all requirements
+	 * 
+	 * @access public
+	 * @since 1.0.0
+	 * @return bool
+	 */
+	public function hasValidRequirements() : bool{
+		if($this->requirements->count() > 0){
+			$iter = $this->requirements->getIterator();
+			
+			while($iter->valid()){
+				$ident = $iter->key();
+				$data = $iter->current();
+				
+				$available = array_keys($data);
+				$requested = array_values($data);
+				
+				$requestedArray = explode('.', $requested[0]);
+				$availableArray = explode('.', $available[0]);
+				
+				for($i = 0; $i < count($requestedArray); $i++){
+					if(intval($requestedArray[$i]) > intval($availableArray[$i])){
+						return false;
+					}
+				}
+				
+				$iter->next();
+			}
+			
+			return true;
+		}else{
+			// TODO add logger - maybe
+			// no requirements are defined
+		}
 	}
 }
 ?>

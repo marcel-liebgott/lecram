@@ -31,6 +31,8 @@ namespace Lecram\Server;
  * @since 1.0.0
  */
 abstract class WebserverRequirement{
-	const PHP_VERSION = "";
+	const MIN = ">";
+	const EQUAL = "=";
+	const MAX = "<";
 }
 ?>
