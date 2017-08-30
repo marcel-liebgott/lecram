@@ -19,4 +19,18 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
+
+namespace Lecram\Server;
+
+/**
+ * Requirement definition
+ *
+ * @author Marcel Liebgott <marcel@mliebgott.de>
+ * @package Lecram
+ * @subpackage Util
+ * @since 1.0.0
+ */
+class Requirement{
+	
+}
 ?>
