@@ -31,6 +31,97 @@ namespace Lecram\Server;
  * @since 1.0.0
  */
 class Requirement{
-	
+    /**
+     * internal name of this requirement
+     *
+     * @access private
+     * @var String
+     */
+	private $name;
+
+    /**
+     * the version which we needed
+     *
+     * @access private
+     * @var integer
+     */
+	private $version;
+
+    /**
+     * which version relation does we need
+     *
+     * @access private
+     * @var WebserverRequirement
+     */
+	private $operation;
+
+    /**
+     * set the name of this requirement
+     *
+     * @access public
+     * @since 1.0.0
+     * @return String
+     */
+    public function getName() : string{
+        return $this->name;
+    }
+
+    /**
+     * get the internal name of this requirement
+     *
+     * @access public
+     * @since 1.0.0
+     * @param String $name
+     *              the internal name of the requirement
+     */
+    public function setName($name){
+        $this->name = $name;
+    }
+
+    /**
+     * the version
+     *
+     * @access public
+     * @since 1.0.0
+     * @return int
+     */
+    public function getVersion(): int{
+        return $this->version;
+    }
+
+    /**
+     * set the version which we need
+     *
+     * @access public
+     * @since 1.0.0
+     * @param int $version
+     *              the version which we needed
+     */
+    public function setVersion(int $version): void{
+        $this->version = $version;
+    }
+
+    /**
+     * get the version relation
+     *
+     * @access public
+     * @since 1.0.0
+     * @return WebserverRequirement
+     */
+    public function getOperation(): WebserverRequirement{
+        return $this->operation;
+    }
+
+    /**
+     * set the version relation
+     *
+     * @access public
+     * @since 1.0.0
+     * @param WebserverRequirement $operation
+     *              which relation does have this requirement
+     */
+    public function setOperation(WebserverRequirement $operation): void{
+        $this->operation = $operation;
+    }
 }
 ?>
