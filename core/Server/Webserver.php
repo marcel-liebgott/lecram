@@ -78,7 +78,7 @@ class Webserver extends Singleton{
 	 * @access public
 	 * @since 1.0.0
 	 * @return string
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function getGdVersion() : string{
 		if(extension_loaded('gd') && function_exists('gd_info')){
