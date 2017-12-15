@@ -71,15 +71,15 @@ class Webserver extends Singleton{
 	public function getPhpVersion() : string{
 		return phpversion();
 	}
-	
-	/**
-	 * return the current gd library
-	 * 
-	 * @access public
-	 * @since 1.0.0
-	 * @return string
-	 * @throws Exception
-	 */
+
+    /**
+     * return the current gd library
+     *
+     * @access public
+     * @since 1.0.0
+     * @return string
+     * @throws \Exception
+     */
 	public function getGdVersion() : string{
 		if(extension_loaded('gd') && function_exists('gd_info')){
 			$gd = gd_info();
