@@ -97,7 +97,7 @@ class Listable implements IteratorAggregate, Countable{
 				$this->add($elem);
 			}
 		}elseif(gettype($parameters) === "object"){
-			$this->parameters[] = array($parameters);
+			$this->parameters = array($parameters);
 		}
 		
 		return $this;
