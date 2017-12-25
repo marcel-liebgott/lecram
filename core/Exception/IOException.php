@@ -44,7 +44,7 @@ class IOException extends Exception{
 	 * 				exception message
 	 */
 	public function __construct(string $msg){
-		parent::__construct($msg);
+        parent::__construct($msg);
 	}
 }
 ?>
