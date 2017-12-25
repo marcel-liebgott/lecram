@@ -24,6 +24,8 @@ namespace Lecram\Server;
 
 use Lecram\Util\Listable;
 use Lecram\Singleton;
+use Lecram\Util\Requirement;
+use Lecram\Util\Version;
 
 /**
  * Webserver class
@@ -66,10 +68,18 @@ class Webserver extends Singleton{
 	 * 
 	 * @access public
 	 * @since 1.0.0
-	 * @return string
+	 * @return Version
 	 */
-	public function getPhpVersion() : string{
-		return phpversion();
+	public function getPhpVersion() : Version{
+	    $major = explode(".", phpversion())[0];
+	    $minor = explode(".", phpversion())[1];
+	    $patch = explode(".", phpversion())[2];
+
+	    $phpVersion = new Version();
+	    $phpVersion->setMajor($major);
+	    $phpVersion->setMinor($minor);
+	    $phpVersion->setPatch($patch);
+		return $phpVersion;
 	}
 	
 	/**
@@ -94,17 +104,11 @@ class Webserver extends Singleton{
 	 * 
 	 * @access public
 	 * @since 1.0.0
-	 * @param string $key
-	 * 					the requirement key
-	 * @param string $available
-	 * 					which version is currently available on the webserver
-	 * @param string $requested
-	 * 					which version does we need
-	 * @param string $operation
-	 * 					which version operation does we need
+	 * @param Requirement $requirment
+	 * 					the requirement
 	 */
-	public function addRequirement(string $key, string $available, string $requested, string $operation){
-		$this->requirements->add(array($key => array($available => $requested)));
+	public function addRequirement(Requirement $requirment){
+	    $this->requirements->add($requirment);
 	}
 	
 	/**
@@ -119,20 +123,16 @@ class Webserver extends Singleton{
 			$iter = $this->requirements->getIterator();
 			
 			while($iter->valid()){
-				$ident = $iter->key();
-				$data = $iter->current();
-				
-				$available = array_keys($data);
-				$requested = array_values($data);
-				
-				$requestedArray = explode('.', $requested[0]);
-				$availableArray = explode('.', $available[0]);
-				
-				for($i = 0; $i < count($requestedArray); $i++){
-					if(intval($requestedArray[$i]) > intval($availableArray[$i])){
-						return false;
-					}
-				}
+				$requirement = $iter->current();
+				$requestedVersion = $requirement->getRequestedVersion();
+				$availableVersion = $requirement->getServerRequirement()->getAvailableVersion();
+
+				$requestedVersionId = $requestedVersion->getVersionId();
+				$availableVersionId = $availableVersion->getVersionId();
+
+				if($availableVersionId < $requestedVersionId){
+				    return false;
+                }
 				
 				$iter->next();
 			}
