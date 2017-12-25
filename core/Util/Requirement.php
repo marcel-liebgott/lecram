@@ -20,7 +20,10 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Lecram\Server;
+namespace Lecram\Util;
+
+use Lecram\Server\Requirements\ServerRequirement;
+use Lecram\Server\WebserverRequirement;
 
 /**
  * Requirement definition
@@ -30,22 +33,22 @@ namespace Lecram\Server;
  * @subpackage Util
  * @since 1.0.0
  */
-class Requirement{
-    /**
-     * internal name of this requirement
-     *
-     * @access private
-     * @var String
-     */
-	private $name;
-
+class Requirement {
     /**
      * the version which we needed
      *
      * @access private
-     * @var integer
+     * @var Version
      */
-	private $version;
+	private $requestedVersion;
+
+    /**
+     * the version as int identifier
+     *
+     * @access private
+     * @var int
+     */
+	private $versionId;
 
     /**
      * which version relation does we need
@@ -56,26 +59,17 @@ class Requirement{
 	private $operation;
 
     /**
-     * set the name of this requirement
+     * the server requirement
      *
-     * @access public
-     * @since 1.0.0
-     * @return String
+     * @access private
+     * @var ServerRequirement
      */
-    public function getName() : string{
-        return $this->name;
-    }
+	private $serverRequirement;
 
     /**
-     * get the internal name of this requirement
-     *
-     * @access public
-     * @since 1.0.0
-     * @param String $name
-     *              the internal name of the requirement
+     * Requirement constructor.
      */
-    public function setName($name){
-        $this->name = $name;
+    public function __construct() {
     }
 
     /**
@@ -83,10 +77,10 @@ class Requirement{
      *
      * @access public
      * @since 1.0.0
-     * @return int
+     * @return Version
      */
-    public function getVersion(): int{
-        return $this->version;
+    public function getRequestedVersion(): Version{
+        return $this->requestedVersion;
     }
 
     /**
@@ -94,11 +88,23 @@ class Requirement{
      *
      * @access public
      * @since 1.0.0
-     * @param int $version
+     * @param Version $version
      *              the version which we needed
      */
-    public function setVersion(int $version): void{
-        $this->version = $version;
+    public function setRequestedVersion(Version $version): void{
+        $this->requestedVersion = $version;
+        $this->versionId = $version->getMajor() . $version->getMinor() . $version->getPatch();
+    }
+
+    /**
+     * return the version as int
+     *
+     * @access public
+     * @since 1.0.0
+     * @return int
+     */
+    public function getVersionId() : int{
+        return $this->versionId;
     }
 
     /**
@@ -117,11 +123,35 @@ class Requirement{
      *
      * @access public
      * @since 1.0.0
-     * @param WebserverRequirement $operation
+     * @param string $operation
      *              which relation does have this requirement
      */
-    public function setOperation(WebserverRequirement $operation): void{
+    public function setOperation(string $operation): void{
         $this->operation = $operation;
+    }
+
+    /**
+     *
+     * return the current responsible server requirement
+     *
+     * @access public
+     * @since 1.0.0
+     * @return ServerRequirement
+     */
+    public function getServerRequirement(): ServerRequirement {
+        return $this->serverRequirement;
+    }
+
+    /**
+     * set the current responsible server requirement
+     *
+     * @access public
+     * @since 1.0.0
+     * @param ServerRequirement $serverRequirement
+     *              the server requirement object
+     */
+    public function setServerRequirement(ServerRequirement $serverRequirement): void {
+        $this->serverRequirement = $serverRequirement;
     }
 }
 ?>
