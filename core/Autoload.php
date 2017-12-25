@@ -23,6 +23,7 @@
 namespace Lecram;
 
 use Lecram\Exception\FileNotFoundException;
+use Lecram\Exception\InvalidClassNameException;
 
 require_once 'core/Singleton.php';
 require_once 'core/Exception/IOException.php';
@@ -42,7 +43,7 @@ class Autoload extends Singleton{
 	 * 
 	 * @var string
 	 */
-	private static $prefix;
+	private $prefix;
 	
 	/**
 	 * return a singleton Autloader instance
@@ -64,7 +65,7 @@ class Autoload extends Singleton{
 	 * @param string $prefix
 	 */
 	public function setPrefix(string $prefix) : void{
-		self::$prefix = $prefix;
+		$this->prefix = $prefix;
 	}
 	
 	/**
@@ -75,8 +76,8 @@ class Autoload extends Singleton{
 	 * @since 1.0.0
 	 * @return string
 	 */
-	public static function getPrefix() : string{
-		return self::$prefix;
+	public function getPrefix() : string{
+		return $this->prefix;
 	}
 	
 	/**
@@ -100,15 +101,17 @@ class Autoload extends Singleton{
 	public function unregister() : void{
 		spl_autoload_unregister([$this, $this->autoload()]);
 	}
-	
-	/**
-	 * handle class request
-	 * 
-	 * @access private
-	 * @param string $class
-	 * @codeCoverageIgnore
-	 */
-	public function autoload(string $class){	
+
+    /**
+     * handle class request
+     *
+     * @access private
+     * @param string $class
+     * @throws FileNotFoundException
+     * @throws InvalidClassNameException
+     * @codeCoverageIgnore
+     */
+	public function autoload(string $class){
 		// get clear class name
 		$lastBackSlash = strrpos($class, '\\');
 		$className = $class;
@@ -118,8 +121,8 @@ class Autoload extends Singleton{
 			$className = substr($class, $lastBackSlash + 1);
 			$namespace = substr($class, 0, $lastBackSlash);
 		}
-		
-		if(!empty(self::$prefix) && substr($className, 0, strlen($this->prefix)) !== $className){
+
+		if(!empty($this->prefix) && substr($className, 0, strlen($this->prefix)) !== $className){
 			throw new InvalidClassNameException("The requested class isn't valid");
 		}
 		

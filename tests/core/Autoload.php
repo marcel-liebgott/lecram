@@ -15,7 +15,8 @@ class AutoloadTest extends TestCase{
 	
 	public function testPrefix() : void{
 		$this->autoload->setPrefix('lecram');
-		$this->assertEquals('lecram', $this->autoload::getPrefix());
+		$this->assertEquals('lecram', $this->autoload->getPrefix());
+        $this->autoload->setPrefix('');
 	}
 }
 ?>
