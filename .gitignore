@@ -3,6 +3,8 @@
 .htaccess
 .buildpath
 coverage.xml
+composer.lock
+composer.phar
 
 #Folders
 .idea
